@@ -368,14 +368,14 @@ def user(user):
 
     user['panel_url'] = "https://" + config.get_panel_domain() + "/" + user['_id'] + "/"
     user['tier_enabled_for_subscription'] = utils.get_user_tiers_enabled_for_subscription(user['_id'])
-
+    
     return render_template('admin/user.jinja',
         back_to='users',
         libertea_version=config.LIBERTEA_VERSION,
         no_domain_warning=not utils.has_active_endpoints(),
         traffic_today=round(stats.get_gigabytes_today(user['_id'], db=db) or 0, 2),
-        traffic_this_month=round(stats.get_gigabytes_this_month(user['_id'], db=db), 2),
-        traffic_past_30_days=round(stats.get_gigabytes_past_30_days(user['_id'], db=db), 2),
+        traffic_this_month=round(stats.get_gigabytes_this_month(user['_id'], db=db) or 0, 2),
+        traffic_past_30_days=round(stats.get_gigabytes_past_30_days(user['_id'], db=db) or 0, 2),
         ips_today=user['__cache_ips_today'] if '__cache_ips_today' in user else '-',
         month_name=datetime.now().strftime("%B"),
         admin_uuid=config.get_admin_uuid(),
