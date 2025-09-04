@@ -332,10 +332,20 @@ chmod +x haproxy/cert-camouflage.sh
 if [ ! -f /etc/ssl/ha-certs/selfsigned.pem ]; then
     echo " ** Generating self-signed certificate..."
     mkdir -p data/certs/selfsigned
+    mkdir -p /etc/ssl/ha-certs
+
+    # Create certificates before mounting Docker Volumes
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
         -keyout data/certs/selfsigned/privkey.pem \
         -out data/certs/selfsigned/cert.pem \
-        -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=www.example.com" 2>/dev/null
+        -subj "/C=US/ST=Denial/L=Springfield/O=Dis/CN=$PANEL_DOMAIN" 2>/dev/null
+
+    # УBow that the files are created correctly
+    if [ ! -f data/certs/selfsigned/privkey.pem ] || [ ! -f data/certs/selfsigned/cert.pem ]; then
+        echo "ERROR: Failed to generate SSL certificates"
+        exit 1
+    fi
+
     cat data/certs/selfsigned/privkey.pem data/certs/selfsigned/cert.pem > data/certs/selfsigned/fullchain.pem
     cp data/certs/selfsigned/fullchain.pem /etc/ssl/ha-certs/selfsigned.pem
 fi

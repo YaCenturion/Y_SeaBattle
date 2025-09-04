@@ -81,6 +81,8 @@ services:
       - log-parser
   camouflage-nginx-fallback:
     image: nginx:latest
+    volumes:
+      - ./camouflage/seabattle:/usr/share/nginx/html:ro
     container_name: libertea-camouflage-nginx-fallback
     ports:
       - "127.0.0.1:25898:80"
