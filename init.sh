@@ -576,6 +576,7 @@ done
 
 panel_ip=$(dig +short "$PANEL_DOMAIN" | head -n 1)
 panel_ip=$(echo "$panel_ip" | tr -d '[:space:]')
+panel_UUID=$(docker exec libertea-haproxy env | grep PANEL_ADMIN_UUID)
 
 echo ""
 echo ""
@@ -583,6 +584,7 @@ echo " Installation completed."
 echo " Please visit panel to configure your VPN."
 echo ""
 echo " Panel addresses:"
+echo "   UUID: $panel_UUID"
 echo "   https://$PANEL_DOMAIN/$PANEL_ADMIN_UUID/"
 echo "   https://$my_ip/$PANEL_ADMIN_UUID/"
 echo ""
