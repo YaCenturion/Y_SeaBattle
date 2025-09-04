@@ -577,6 +577,11 @@ done
 panel_ip=$(dig +short "$PANEL_DOMAIN" | head -n 1)
 panel_ip=$(echo "$panel_ip" | tr -d '[:space:]')
 panel_UUID=$(docker exec libertea-haproxy env | grep PANEL_ADMIN_UUID)
+if [ "$panel_UUID" != "$PANEL_ADMIN_UUID" ]; then
+    echo ""
+    echo "WARNING: Your panel UUID and PANEL_ADMIN_UUID is not equal."
+    echo ""
+fi
 
 echo ""
 echo ""
