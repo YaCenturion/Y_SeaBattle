@@ -389,6 +389,16 @@ echo "    - vmess-grpc..."
 
 echo " ** Installing web panel..."
 mkdir -p ./data
+mkdir -p ./data/usages/day
+mkdir -p ./data/usages/month
+echo '0' > ./data/usages/day/2025-09-04.json
+echo '0' > ./data/usages/month/2025-09.json
+chmod 755 ./data/usages/
+chmod 755 ./data/usages/day/
+chmod 755 ./data/usages/month/
+chmod 644 ./data/usages/day/*.json
+chmod 644 ./data/usages/month/*.json
+
 touch ./data/all-domains-ever.lst
 cp panel/libertea-panel.service /etc/systemd/system/
 # replace {rootpath} with the path to the root of the project
